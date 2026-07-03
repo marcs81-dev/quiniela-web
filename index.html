@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiniela Mundial 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow+Condensed:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pitch:#0b3d2e;
+    --pitch-dark:#082b20;
+    --chalk:#f5f5f0;
+    --gold:#f2c14e;
+    --gold-dim:#c99a2e;
+    --card-red:#c1121f;
+    --line:rgba(245,245,240,0.14);
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background: repeating-linear-gradient(0deg, var(--pitch) 0 60px, var(--pitch-dark) 60px 120px);
+    color:var(--chalk);
+    font-family:'Barlow Condensed', sans-serif;
+    min-height:100vh;
+  }
+  .wrap{max-width:900px;margin:0 auto;padding:18px 14px 60px;}
+  h1,h2,h3{font-family:'Anton', sans-serif;font-weight:400;letter-spacing:0.5px;margin:0;}
+  header{text-align:center;padding:22px 10px 18px;}
+  header .eyebrow{color:var(--gold);font-size:13px;letter-spacing:4px;text-transform:uppercase;margin-bottom:6px;}
+  header h1{font-size:clamp(28px,7vw,42px);color:var(--chalk);text-shadow:0 2px 0 rgba(0,0,0,0.3);}
+  header p{color:rgba(245,245,240,0.7);font-size:16px;margin-top:6px;}
+  .card{background:rgba(8,43,32,0.55);border:1px solid var(--line);border-radius:10px;padding:16px;margin-bottom:16px;backdrop-filter:blur(2px);}
+  .login-row{display:flex;gap:8px;flex-wrap:wrap;}
+  input[type=text]{flex:1;min-width:160px;background:var(--chalk);border:none;border-radius:6px;padding:12px 12px;font-family:'Barlow Condensed',sans-serif;font-size:17px;color:#111;}
+  button{font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:16px;letter-spacing:0.5px;border:none;border-radius:6px;padding:12px 18px;background:var(--gold);color:#20180a;cursor:pointer;transition:transform .1s ease, background .15s ease;}
+  button:hover{background:#ffd968;}
+  button:active{transform:scale(0.97);}
+  button.secondary{background:transparent;border:1px solid var(--gold-dim);color:var(--gold);}
+  button.small{padding:7px 12px;font-size:14px;}
+  button:disabled{opacity:0.35;cursor:not-allowed;}
+  .tabs{display:flex;gap:8px;margin-bottom:14px;overflow-x:auto;}
+  .tabs button{white-space:nowrap;background:transparent;border:1px solid var(--line);color:var(--chalk);}
+  .tabs button.active{background:var(--gold);color:#20180a;border-color:var(--gold);}
+  .round-label{display:flex;align-items:center;gap:10px;margin:22px 0 10px;}
+  .round-label .num{font-family:'Anton',sans-serif;font-size:22px;color:var(--pitch-dark);background:var(--gold);width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .round-label h2{font-size:22px;color:var(--gold);text-transform:uppercase;}
+  .match{background:rgba(0,0,0,0.22);border:1px solid var(--line);border-radius:8px;padding:12px 14px;margin-bottom:10px;}
+  .match .teams{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px;}
+  .team{font-size:19px;flex:1;}
+  .vs{color:var(--gold-dim);font-size:13px;letter-spacing:2px;}
+  .match .meta{font-size:13px;color:rgba(245,245,240,0.5);margin-bottom:8px;}
+  select{width:100%;padding:10px;border-radius:6px;border:1px solid var(--gold-dim);background:#12241c;color:var(--chalk);font-family:'Barlow Condensed',sans-serif;font-size:16px;}
+  select:disabled{opacity:0.4;}
+  .locked-note{font-size:13px;color:rgba(245,245,240,0.45);font-style:italic;}
+  .edit-row{display:flex;gap:8px;margin-top:6px;flex-wrap:wrap;}
+  .edit-row input{padding:8px;font-size:15px;}
+  table.compare{width:100%;border-collapse:collapse;font-size:15px;}
+  table.compare th, table.compare td{border:1px solid var(--line);padding:8px 6px;text-align:left;}
+  table.compare th{background:rgba(0,0,0,0.3);color:var(--gold);}
+  .scroll-x{overflow-x:auto;}
+  .board-row{display:flex;align-items:center;justify-content:space-between;padding:10px 4px;border-bottom:1px solid var(--line);}
+  .board-row:last-child{border-bottom:none;}
+  .board-rank{color:var(--gold);font-family:'Anton',sans-serif;width:26px;}
+  .board-name{flex:1;font-size:18px;}
+  .board-score{font-family:'Anton',sans-serif;color:var(--chalk);font-size:20px;}
+  .whoami{display:flex;align-items:center;justify-content:space-between;font-size:14px;color:rgba(245,245,240,0.6);margin-bottom:14px;}
+  .whoami b{color:var(--gold);}
+  .empty{color:rgba(245,245,240,0.5);font-size:15px;padding:12px 0;}
+  footer{text-align:center;color:rgba(245,245,240,0.35);font-size:12px;margin-top:30px;}
+  .conn-badge{font-size:12px;padding:4px 10px;border-radius:20px;display:inline-block;margin-bottom:10px;}
+  .conn-ok{background:rgba(143,227,136,0.15);color:#8fe388;border:1px solid rgba(143,227,136,0.3);}
+  .conn-bad{background:rgba(193,18,31,0.15);color:#ff9b9b;border:1px solid rgba(193,18,31,0.3);}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Copa Mundial 2026</div>
+    <h1>La Quiniela de la Familia</h1>
+    <p>Elige quién avanza, ronda por ronda, y compara tus picks con todos.</p>
+  </header>
+
+  <div id="conn-status" class="conn-badge conn-bad">Conectando con la base de datos...</div>
+
+  <div id="login-card" class="card">
+    <h3 style="margin-bottom:10px;">¿Quién eres?</h3>
+    <div class="login-row">
+      <input type="text" id="name-input" placeholder="Escribe tu nombre (ej. Papá, Ana...)">
+      <button id="join-btn">Entrar a jugar</button>
+    </div>
+  </div>
+
+  <div id="app" style="display:none;">
+    <div class="whoami">
+      <span>Jugando como <b id="current-name"></b></span>
+      <button class="secondary small" id="switch-btn">Cambiar de jugador</button>
+    </div>
+
+    <div class="tabs">
+      <button id="tab-bracket" class="active">Mi quiniela</button>
+      <button id="tab-compare">Comparar todos</button>
+      <button id="tab-board">Tabla de puntos</button>
+      <button id="tab-admin">Actualizar equipos / resultados</button>
+    </div>
+
+    <div id="view-bracket"></div>
+    <div id="view-compare" style="display:none;"></div>
+    <div id="view-board" style="display:none;"></div>
+    <div id="view-admin" style="display:none;"></div>
+  </div>
+
+  <footer>Hecho a mano para la familia · datos guardados en Firebase, visibles para todos los que juegan</footer>
+</div>
+
+<!-- Firebase (free tier) -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script>
+// =====================================================================
+// 1) PEGA AQUÍ TU CONFIGURACIÓN DE FIREBASE
+//    (Project settings -> tus apps -> ícono </> -> firebaseConfig)
+// =====================================================================
+const firebaseConfig = {
+  apiKey: "AIzaSyBMkyj8250B0UkVYzlc-vz78q4eZn4cw6A",
+  authDomain: "quiniela-familiar-faa29.firebaseapp.com",
+  projectId: "quiniela-familiar-faa29",
+  storageBucket: "quiniela-familiar-faa29.firebasestorage.app",
+  messagingSenderId: "550051828851",
+  appId: "1:550051828851:web:7bec7e31c44a907970c606",
+  measurementId: "G-3R49TGRT1V"
+};
+// =====================================================================
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+// ---------- BRACKET STRUCTURE ----------
+const R16_SEED = [
+  { id:'M1', team1:'🇨🇦 Canadá',   team2:'🇲🇦 Marruecos', meta:'Confirmado' },
+  { id:'M2', team1:'🇧🇷 Brasil',    team2:'🇳🇴 Noruega',    meta:'Confirmado' },
+  { id:'M3', team1:'🇵🇾 Paraguay',  team2:'🇫🇷 Francia',    meta:'Sáb 4 jul' },
+  { id:'M4', team1:'🇲🇽 México',    team2:'🇬🇧 Inglaterra', meta:'Confirmado' },
+  { id:'M5', team1:'🇧🇪 Bélgica',   team2:'🇺🇸 Estados Unidos', meta:'Confirmado' },
+  { id:'M6', team1:null, team2:null, meta:'Ganador España/Austria vs Ganador Portugal/Croacia · 6 jul, Dallas' },
+  { id:'M7', team1:null, team2:null, meta:'Ganador Suiza/Argelia vs Ganador Colombia/Ghana · 7 jul, Vancouver' },
+  { id:'M8', team1:null, team2:null, meta:'Ganador Argentina/Cabo Verde vs Ganador Australia/Egipto · 3 jul' },
+];
+const BRACKET_TREE = {
+  R16: ['M1','M2','M3','M4','M5','M6','M7','M8'],
+  QF:  [ {id:'Q1', from:['M1','M2']}, {id:'Q2', from:['M3','M4']}, {id:'Q3', from:['M5','M6']}, {id:'Q4', from:['M7','M8']} ],
+  SF:  [ {id:'S1', from:['Q1','Q2']}, {id:'S2', from:['Q3','Q4']} ],
+  F:   [ {id:'F1', from:['S1','S2']} ]
+};
+const ROUND_LABELS = { R16:'Octavos de final', QF:'Cuartos de final', SF:'Semifinal', F:'Gran Final' };
+const ALL_ROUND_KEYS = ['R16','QF','SF','F'];
+
+// ---------- STATE ----------
+let currentUser = null;
+let matchesData = {};
+let allPicks = {};
+let results = {};
+let participants = [];
+
+function seedMatches(){
+  const m = {};
+  R16_SEED.forEach(x => m[x.id] = { team1:x.team1, team2:x.team2, meta:x.meta });
+  return m;
+}
+matchesData = seedMatches();
+
+// ---------- FIRESTORE WIRING ----------
+// Collections used:
+//   state/matches      { data: {...matchesData} }
+//   state/participants { list: [...names] }
+//   state/results      { data: {...results} }
+//   picks/{name}        { data: {...userPicks} }
+function setConn(ok, msg){
+  const b = document.getElementById('conn-status');
+  b.className = 'conn-badge ' + (ok ? 'conn-ok' : 'conn-bad');
+  b.textContent = msg;
+}
+
+function listenAll(){
+  db.collection('state').doc('matches').onSnapshot(snap=>{
+    matchesData = snap.exists && snap.data().data ? snap.data().data : seedMatches();
+    rerenderActiveTab();
+  }, err=>setConn(false, 'Error leyendo equipos: '+err.message));
+
+  db.collection('state').doc('participants').onSnapshot(snap=>{
+    participants = snap.exists && snap.data().list ? snap.data().list : [];
+    rerenderActiveTab();
+  }, err=>setConn(false, 'Error leyendo participantes: '+err.message));
+
+  db.collection('state').doc('results').onSnapshot(snap=>{
+    results = snap.exists && snap.data().data ? snap.data().data : {};
+    rerenderActiveTab();
+  });
+
+  db.collection('picks').onSnapshot(snap=>{
+    const next = {};
+    snap.forEach(doc=>{ next[doc.id] = (doc.data() && doc.data().data) || {}; });
+    allPicks = next;
+    rerenderActiveTab();
+    setConn(true, 'Conectado ✓ — todos ven los mismos datos en vivo');
+  }, err=>setConn(false, 'Error leyendo picks: '+err.message));
+}
+
+async function saveMatches(){ await db.collection('state').doc('matches').set({ data: matchesData }); }
+async function saveParticipants(){ await db.collection('state').doc('participants').set({ list: participants }); }
+async function savePicks(name){ await db.collection('picks').doc(name).set({ data: allPicks[name]||{} }); }
+async function saveResults(){ await db.collection('state').doc('results').set({ data: results }); }
+
+let activeTab = 'bracket';
+function rerenderActiveTab(){
+  if(document.getElementById('app').style.display==='none') return;
+  if(activeTab==='bracket') renderBracket();
+  if(activeTab==='compare') renderCompare();
+  if(activeTab==='board') renderBoard();
+  if(activeTab==='admin') renderAdmin();
+}
+
+// ---------- RESOLUTION LOGIC (same rules as before) ----------
+function resolveTeam(matchId, userPicks){
+  if(matchId.startsWith('M')){
+    const m = matchesData[matchId] || {};
+    return { team1: m.team1 || 'Por definir', team2: m.team2 || 'Por definir', ready: !!(m.team1 && m.team2) };
+  }
+  for(const key of ['QF','SF','F']){
+    const found = BRACKET_TREE[key].find(x=>x.id===matchId);
+    if(found){
+      const [a,b] = found.from;
+      const teamA = teamFromPick(a, userPicks);
+      const teamB = teamFromPick(b, userPicks);
+      return { team1:teamA.name, team2:teamB.name, ready: teamA.ready && teamB.ready };
+    }
+  }
+}
+function teamFromPick(matchId, userPicks){
+  if(matchId.startsWith('M')){
+    const m = matchesData[matchId] || {};
+    const ready = !!(m.team1 && m.team2);
+    if(!ready) return { name:'Por definir', ready:false };
+    const pick = userPicks[matchId];
+    if(!pick) return { name:'(sin elegir)', ready:false };
+    return { name: m[pick], ready:true };
+  }
+  const resolved = resolveTeam(matchId, userPicks);
+  if(!resolved.ready) return { name:'Ganador '+labelFor(matchId), ready:false };
+  const pick = userPicks[matchId];
+  if(!pick) return { name:'(sin elegir)', ready:false };
+  return { name: resolved[pick], ready:true };
+}
+function labelFor(matchId){
+  const idx = { Q1:'Cuartos 1',Q2:'Cuartos 2',Q3:'Cuartos 3',Q4:'Cuartos 4',S1:'Semi 1',S2:'Semi 2' };
+  return idx[matchId] || matchId;
+}
+function allMatchIdsInOrder(){
+  const ids = [...BRACKET_TREE.R16];
+  BRACKET_TREE.QF.forEach(x=>ids.push(x.id));
+  BRACKET_TREE.SF.forEach(x=>ids.push(x.id));
+  BRACKET_TREE.F.forEach(x=>ids.push(x.id));
+  return ids;
+}
+function matchLabel(mid){
+  if(mid.startsWith('M')) return 'Octavos · '+mid;
+  if(mid.startsWith('Q')) return 'Cuartos · '+mid;
+  if(mid.startsWith('S')) return 'Semi · '+mid;
+  return 'FINAL';
+}
+
+// ---------- RENDER: MY BRACKET ----------
+function renderBracket(){
+  const el = document.getElementById('view-bracket');
+  const userPicks = allPicks[currentUser] = allPicks[currentUser] || {};
+  let html = '';
+  for(const roundKey of ALL_ROUND_KEYS){
+    const list = roundKey==='R16' ? BRACKET_TREE.R16.map(id=>({id})) : BRACKET_TREE[roundKey];
+    html += `<div class="round-label"><div class="num">${roundKey==='R16'?'8':roundKey==='QF'?'4':roundKey==='SF'?'2':'🏆'}</div><h2>${ROUND_LABELS[roundKey]}</h2></div>`;
+    for(const entry of list){
+      const mid = entry.id;
+      const t = resolveTeam(mid, userPicks);
+      const pick = userPicks[mid];
+      const disabled = !t.ready;
+      html += `<div class="match">
+        <div class="teams">
+          <div class="team">${t.team1}</div>
+          <div class="vs">VS</div>
+          <div class="team" style="text-align:right;">${t.team2}</div>
+        </div>
+        ${roundKey==='R16' ? `<div class="meta">${(matchesData[mid]&&matchesData[mid].meta)||''}</div>` : ''}
+        ${disabled
+          ? `<div class="locked-note">Se activa cuando elijas la ronda anterior / se definan los equipos.</div>`
+          : `<select data-match="${mid}">
+               <option value="" ${!pick?'selected':''}>Elegir ganador...</option>
+               <option value="team1" ${pick==='team1'?'selected':''}>${t.team1}</option>
+               <option value="team2" ${pick==='team2'?'selected':''}>${t.team2}</option>
+             </select>`
+        }
+      </div>`;
+    }
+  }
+  el.innerHTML = html;
+  el.querySelectorAll('select[data-match]').forEach(sel=>{
+    sel.addEventListener('change', async (e)=>{
+      const mid = e.target.dataset.match;
+      const val = e.target.value;
+      if(!val){ delete userPicks[mid]; } else { userPicks[mid] = val; }
+      clearDownstream(mid, userPicks);
+      await savePicks(currentUser);
+    });
+  });
+}
+function clearDownstream(mid, userPicks){
+  const order = ['QF','SF','F'];
+  for(const roundKey of order){
+    for(const entry of BRACKET_TREE[roundKey]){
+      if(entry.from.includes(mid)){
+        delete userPicks[entry.id];
+        clearDownstream(entry.id, userPicks);
+      }
+    }
+  }
+}
+
+// ---------- RENDER: COMPARE ----------
+function renderCompare(){
+  const el = document.getElementById('view-compare');
+  if(participants.length===0){ el.innerHTML = '<div class="empty">Todavía no hay jugadores inscritos.</div>'; return; }
+  const ids = allMatchIdsInOrder();
+  let rows = '';
+  for(const mid of ids){
+    rows += `<tr><th>${matchLabel(mid)}</th>`;
+    for(const name of participants){
+      const picks = allPicks[name] || {};
+      const t = resolveTeam(mid, picks);
+      const pick = picks[mid];
+      const val = (pick && t.ready) ? t[pick] : '—';
+      rows += `<td>${val}</td>`;
+    }
+    rows += '</tr>';
+  }
+  el.innerHTML = `<div class="card"><h3 style="margin-bottom:10px;">Comparar quinielas</h3>
+    <div class="scroll-x"><table class="compare">
+      <tr><th>Partido</th>${participants.map(n=>`<th>${n}</th>`).join('')}</tr>
+      ${rows}
+    </table></div>
+  </div>`;
+}
+
+// ---------- RENDER: LEADERBOARD ----------
+function renderBoard(){
+  const el = document.getElementById('view-board');
+  if(participants.length===0){ el.innerHTML = '<div class="empty">Todavía no hay jugadores inscritos.</div>'; return; }
+  const ids = allMatchIdsInOrder();
+  const scored = participants.map(name=>{
+    const picks = allPicks[name] || {};
+    let score = 0;
+    for(const mid of ids){
+      const actual = results[mid];
+      if(!actual) continue;
+      const t = resolveTeam(mid, picks);
+      const pick = picks[mid];
+      if(pick && t.ready && t[pick] === actual) score++;
+    }
+    return { name, score };
+  }).sort((a,b)=>b.score-a.score);
+  const anyResults = Object.keys(results).length>0;
+  el.innerHTML = `<div class="card">
+    <h3 style="margin-bottom:6px;">Tabla de puntos</h3>
+    <p style="color:rgba(245,245,240,0.55);font-size:14px;margin-top:0;">1 punto por cada ganador acertado. ${anyResults?'':'Aún no se ha marcado ningún resultado real — ve a la pestaña de actualizar.'}</p>
+    ${scored.map((s,i)=>`<div class="board-row"><span class="board-rank">${i+1}</span><span class="board-name">${s.name}</span><span class="board-score">${s.score}</span></div>`).join('')}
+  </div>`;
+}
+
+// ---------- RENDER: ADMIN ----------
+function renderAdmin(){
+  const el = document.getElementById('view-admin');
+  let tbdHtml = '';
+  for(const m of BRACKET_TREE.R16){
+    const data = matchesData[m] || {};
+    if(!data.team1 || !data.team2){
+      tbdHtml += `<div class="match">
+        <div class="meta">${data.meta||''}</div>
+        <div class="edit-row">
+          <input type="text" placeholder="Equipo 1" data-side="team1" data-mid="${m}" value="${data.team1||''}">
+          <input type="text" placeholder="Equipo 2" data-side="team2" data-mid="${m}" value="${data.team2||''}">
+          <button class="small save-team" data-mid="${m}">Guardar</button>
+        </div>
+      </div>`;
+    }
+  }
+  if(!tbdHtml) tbdHtml = '<div class="empty">Todos los equipos de octavos ya están definidos ✅</div>';
+
+  const ids = allMatchIdsInOrder();
+  let resultHtml = '';
+  for(const mid of ids){
+    const anyUser = participants[0];
+    const picks = anyUser ? (allPicks[anyUser]||{}) : {};
+    const t = resolveTeam(mid, picks);
+    if(!t.ready) continue;
+    const current = results[mid] || '';
+    resultHtml += `<div class="match">
+      <div class="meta">${matchLabel(mid)}</div>
+      <select data-result="${mid}">
+        <option value="">Aún no se juega / sin marcar</option>
+        <option value="${t.team1}" ${current===t.team1?'selected':''}>${t.team1} ganó</option>
+        <option value="${t.team2}" ${current===t.team2?'selected':''}>${t.team2} ganó</option>
+      </select>
+    </div>`;
+  }
+  if(!resultHtml) resultHtml = '<div class="empty">Cuando haya equipos definidos con picks hechos, aquí podrás marcar quién ganó de verdad.</div>';
+
+  el.innerHTML = `
+    <div class="card">
+      <h3 style="margin-bottom:6px;">Definir equipos pendientes</h3>
+      <p style="color:rgba(245,245,240,0.55);font-size:14px;margin-top:0;">Cuando se sepa quién avanzó en un partido real, escribe el nombre del equipo aquí.</p>
+      ${tbdHtml}
+    </div>
+    <div class="card">
+      <h3 style="margin-bottom:6px;">Marcar resultados reales</h3>
+      <p style="color:rgba(245,245,240,0.55);font-size:14px;margin-top:0;">Esto alimenta la tabla de puntos.</p>
+      ${resultHtml}
+    </div>
+  `;
+  el.querySelectorAll('.save-team').forEach(btn=>{
+    btn.addEventListener('click', async ()=>{
+      const mid = btn.dataset.mid;
+      const t1 = el.querySelector(`input[data-mid="${mid}"][data-side="team1"]`).value.trim();
+      const t2 = el.querySelector(`input[data-mid="${mid}"][data-side="team2"]`).value.trim();
+      matchesData[mid] = matchesData[mid] || {};
+      if(t1) matchesData[mid].team1 = t1;
+      if(t2) matchesData[mid].team2 = t2;
+      await saveMatches();
+    });
+  });
+  el.querySelectorAll('select[data-result]').forEach(sel=>{
+    sel.addEventListener('change', async (e)=>{
+      const mid = e.target.dataset.result;
+      const val = e.target.value;
+      if(val) results[mid] = val; else delete results[mid];
+      await saveResults();
+    });
+  });
+}
+
+// ---------- TABS ----------
+function showTab(tab){
+  activeTab = tab;
+  document.querySelectorAll('.tabs button').forEach(b=>b.classList.remove('active'));
+  document.getElementById('view-bracket').style.display = tab==='bracket' ? '' : 'none';
+  document.getElementById('view-compare').style.display = tab==='compare' ? '' : 'none';
+  document.getElementById('view-board').style.display = tab==='board' ? '' : 'none';
+  document.getElementById('view-admin').style.display = tab==='admin' ? '' : 'none';
+  document.getElementById('tab-'+tab).classList.add('active');
+  rerenderActiveTab();
+}
+
+// ---------- LOGIN ----------
+async function joinAs(name){
+  currentUser = name;
+  if(!participants.includes(name)){
+    participants.push(name);
+    await saveParticipants();
+  }
+  if(!allPicks[name]) allPicks[name] = {};
+  document.getElementById('current-name').textContent = name;
+  document.getElementById('login-card').style.display = 'none';
+  document.getElementById('app').style.display = '';
+  showTab('bracket');
+}
+
+document.getElementById('join-btn').addEventListener('click', async ()=>{
+  const val = document.getElementById('name-input').value.trim();
+  if(!val) return;
+  await joinAs(val);
+});
+document.getElementById('name-input').addEventListener('keydown', (e)=>{
+  if(e.key==='Enter') document.getElementById('join-btn').click();
+});
+document.getElementById('switch-btn').addEventListener('click', ()=>{
+  document.getElementById('app').style.display = 'none';
+  document.getElementById('login-card').style.display = '';
+  document.getElementById('name-input').value='';
+});
+['bracket','compare','board','admin'].forEach(tab=>{
+  document.getElementById('tab-'+tab).addEventListener('click', ()=>showTab(tab));
+});
+
+// ---------- INIT ----------
+listenAll();
+</script>
+</body>
+</html>
