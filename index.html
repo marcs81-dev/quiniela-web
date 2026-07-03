@@ -29,6 +29,7 @@
     font-size:19px;
     line-height:1.5;
     min-height:100vh;
+    min-height:100dvh;
   }
   .wrap{max-width:760px;margin:0 auto;padding:22px 18px 90px;}
   h1,h2,h3{font-family:'Anton', sans-serif;font-weight:400;letter-spacing:0.5px;margin:0;}
@@ -337,8 +338,14 @@ function listenAll(){
 function todayStr(){ return new Date().toISOString().slice(0,10); }
 
 async function saveMatches(){ await db.collection('state').doc('matches').set({ data: matchesData }); }
-async function saveParticipants(){ await db.collection('state').doc('participants').set({ list: participants }); }
-async function saveAvatars(){ await db.collection('state').doc('avatars').set({ data: avatars }); }
+async function addParticipant(name){
+  await db.collection('state').doc('participants').set(
+    { list: firebase.firestore.FieldValue.arrayUnion(name) }, { merge:true }
+  );
+}
+async function saveAvatarFor(name, emoji){
+  await db.collection('state').doc('avatars').set({ data: { [name]: emoji } }, { merge:true });
+}
 async function savePicks(name){
   await db.collection('picks').doc(name).set({ data: allPicks[name]||{} }, { merge:true });
   showToast('✅ ¡Tu pick se guardó!');
@@ -354,7 +361,7 @@ async function saveResults(){ await db.collection('state').doc('results').set({ 
 function maybeCelebrate(name){
   const total = allMatchIdsInOrder().length;
   const picks = allPicks[name] || {};
-  const done = Object.keys(picks).length;
+  const done = allMatchIdsInOrder().filter(id=>picks[id]).length;
   if(done >= total && !hasCelebrated){
     hasCelebrated = true;
     launchConfetti();
@@ -433,6 +440,12 @@ function labelFor(matchId){
   const idx = { Q1:'Cuartos 1',Q2:'Cuartos 2',Q3:'Cuartos 3',Q4:'Cuartos 4',S1:'Semi 1',S2:'Semi 2' };
   return idx[matchId] || matchId;
 }
+function roundOf(matchId){
+  if(matchId.startsWith('M')) return 'R16';
+  if(matchId.startsWith('Q')) return 'QF';
+  if(matchId.startsWith('S')) return 'SF';
+  return 'F';
+}
 function isLocked(matchId){
   const now = new Date();
   if(matchId.startsWith('M')){
@@ -473,6 +486,30 @@ function matchLabel(mid){
   if(mid.startsWith('Q')) return 'Cuartos · '+mid;
   if(mid.startsWith('S')) return 'Semi · '+mid;
   return 'FINAL';
+}
+
+// Resolves the REAL bracket progress using only admin-marked results —
+// independent of any single participant's (possibly wrong) picks.
+// Used by the admin panel so it always shows the true current matchup.
+function resolveRealTeam(matchId){
+  if(matchId.startsWith('M')){
+    const m = matchesData[matchId] || {};
+    return { team1: m.team1 || null, team2: m.team2 || null, ready: !!(m.team1 && m.team2) };
+  }
+  for(const key of ['QF','SF','F']){
+    const found = BRACKET_TREE[key].find(x=>x.id===matchId);
+    if(found){
+      const [a,b] = found.from;
+      const teamA = realWinnerOf(a);
+      const teamB = realWinnerOf(b);
+      return { team1:teamA, team2:teamB, ready: !!(teamA && teamB) };
+    }
+  }
+}
+function realWinnerOf(matchId){
+  const t = resolveRealTeam(matchId);
+  if(!t.ready) return null;
+  return results[matchId] || null;
 }
 
 // ---------- RENDER: MY BRACKET ----------
@@ -625,6 +662,7 @@ function clearDownstream(mid, userPicks){
     for(const entry of BRACKET_TREE[roundKey]){
       if(entry.from.includes(mid)){
         delete userPicks[entry.id];
+        delete userPicks[entry.id+'_score'];
         clearDownstream(entry.id, userPicks);
       }
     }
@@ -722,9 +760,7 @@ function renderAdmin(){
   const ids = allMatchIdsInOrder();
   let resultHtml = '';
   for(const mid of ids){
-    const anyUser = participants[0];
-    const picks = anyUser ? (allPicks[anyUser]||{}) : {};
-    const t = resolveTeam(mid, picks);
+    const t = resolveRealTeam(mid);
     if(!t.ready) continue;
     const current = results[mid] || '';
     const currentScore = results[mid+'_score'] || {};
@@ -745,7 +781,7 @@ function renderAdmin(){
       </div>
     </div>`;
   }
-  if(!resultHtml) resultHtml = '<div class="empty">Cuando haya equipos definidos con picks hechos, aquí podrás marcar quién ganó de verdad.</div>';
+  if(!resultHtml) resultHtml = '<div class="empty">Todavía no hay cruces reales definidos más allá de octavos. En cuanto marques los ganadores de octavos, aquí aparecerán los cruces reales de cuartos automáticamente.</div>';
 
   el.innerHTML = `
     <div class="card">
@@ -807,11 +843,9 @@ function showTab(tab){
 async function joinAs(name){
   currentUser = name;
   if(!participants.includes(name)){
-    participants.push(name);
-    await saveParticipants();
+    await addParticipant(name);
   }
-  avatars[name] = selectedAvatar;
-  await saveAvatars();
+  await saveAvatarFor(name, selectedAvatar);
   if(!allPicks[name]) allPicks[name] = {};
   document.getElementById('current-name').textContent = `${selectedAvatar} ${name}`;
   document.getElementById('login-card').style.display = 'none';
