@@ -27,26 +27,27 @@
     color:var(--ink);
     font-family:'Barlow Condensed', sans-serif;
     font-size:19px;
-    line-height:1.35;
+    line-height:1.5;
     min-height:100vh;
   }
-  .wrap{max-width:900px;margin:0 auto;padding:18px 14px 70px;}
+  .wrap{max-width:760px;margin:0 auto;padding:22px 18px 90px;}
   h1,h2,h3{font-family:'Anton', sans-serif;font-weight:400;letter-spacing:0.5px;margin:0;}
-  header{text-align:center;padding:22px 10px 18px;}
-  .own-logo{font-size:48px;margin-bottom:6px;filter:drop-shadow(0 3px 3px rgba(0,0,0,0.15));}
-  header .eyebrow{color:var(--gold-dim);font-size:16px;letter-spacing:4px;text-transform:uppercase;margin-bottom:6px;font-weight:700;}
-  header h1{font-size:clamp(32px,8vw,46px);color:var(--pitch-dark);}
-  header p{color:rgba(18,51,36,0.75);font-size:19px;margin-top:8px;}
+  header{text-align:center;padding:30px 10px 26px;}
+  .own-logo{font-size:52px;margin-bottom:10px;filter:drop-shadow(0 3px 3px rgba(0,0,0,0.15));}
+  header .eyebrow{color:var(--gold-dim);font-size:16px;letter-spacing:5px;text-transform:uppercase;margin-bottom:10px;font-weight:700;}
+  header h1{font-size:clamp(32px,8vw,48px);color:var(--pitch-dark);}
+  header p{color:rgba(18,51,36,0.7);font-size:19px;margin-top:12px;max-width:480px;margin-left:auto;margin-right:auto;}
   .instructions{
     background:#fff9ea;
-    border:2px solid var(--gold);
-    border-radius:14px;
-    padding:16px 18px;
-    margin-bottom:16px;
+    border:none;
+    border-radius:20px;
+    padding:22px 24px;
+    margin-bottom:28px;
     font-size:18px;
+    box-shadow:0 4px 18px rgba(242,169,0,0.12);
   }
   .instructions b{color:var(--gold-dim);}
-  .card{background:#ffffff;border:2px solid var(--line);border-radius:14px;padding:18px;margin-bottom:18px;box-shadow:0 2px 10px rgba(18,51,36,0.06);}
+  .card{background:#ffffff;border:none;border-radius:22px;padding:26px;margin-bottom:26px;box-shadow:0 6px 24px rgba(18,51,36,0.08);}
   .login-row{display:flex;gap:10px;flex-wrap:wrap;}
   input[type=text]{
     flex:1;min-width:160px;
@@ -68,28 +69,41 @@
   button:disabled{opacity:0.4;cursor:not-allowed;}
   button.whatsapp{background:#25D366;color:#06371f;}
   button.whatsapp:hover{background:#3ee27f;}
-  .tabs{display:flex;gap:8px;margin-bottom:16px;overflow-x:auto;padding-bottom:4px;}
-  .tabs button{white-space:nowrap;background:#ffffff;border:2px solid var(--line);color:var(--ink);font-size:17px;padding:13px 18px;box-shadow:none;}
-  .tabs button.active{background:var(--pitch);color:#ffffff;border-color:var(--pitch);}
-  .round-label{display:flex;align-items:center;gap:12px;margin:26px 0 12px;}
-  .round-label .num{font-family:'Anton',sans-serif;font-size:24px;color:#ffffff;background:var(--pitch);width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-  .round-label h2{font-size:26px;color:var(--pitch-dark);text-transform:uppercase;}
-  .match{background:#ffffff;border:2px solid var(--line);border-radius:12px;padding:16px;margin-bottom:14px;box-shadow:0 2px 8px rgba(18,51,36,0.05);}
-  .match .teams{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px;}
-  .team{font-size:22px;flex:1;font-weight:600;color:var(--ink);}
-  .vs{color:var(--gold-dim);font-size:15px;letter-spacing:2px;font-weight:700;}
-  .match .meta{font-size:15px;color:rgba(18,51,36,0.6);margin-bottom:10px;}
+  .tabs{
+    display:flex;gap:10px;margin:0 -18px 28px;padding:14px 18px;overflow-x:auto;
+    position:sticky;top:0;background:rgba(255,255,255,0.92);backdrop-filter:blur(6px);
+    z-index:20;box-shadow:0 4px 14px rgba(18,51,36,0.05);
+  }
+  .tabs button{white-space:nowrap;background:#f4f6f4;border:none;color:var(--ink);font-size:17px;padding:13px 20px;box-shadow:none;border-radius:14px;}
+  .tabs button.active{background:var(--pitch);color:#ffffff;}
+  .round-label{display:flex;align-items:center;gap:14px;margin:40px 0 18px;}
+  .round-label .num{font-family:'Anton',sans-serif;font-size:24px;color:#ffffff;background:var(--pitch);width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .round-label h2{font-size:27px;color:var(--pitch-dark);text-transform:uppercase;}
+  .match{background:#ffffff;border:none;border-radius:18px;padding:22px;margin-bottom:18px;box-shadow:0 4px 16px rgba(18,51,36,0.06);}
+  .match .teams{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:14px;}
+  .team{font-size:22px;flex:1;font-weight:600;color:var(--ink);line-height:1.25;}
+  .vs{color:var(--gold-dim);font-size:14px;letter-spacing:2px;font-weight:700;background:#fff4dc;padding:6px 10px;border-radius:20px;flex-shrink:0;}
+  .match .meta{font-size:15px;color:rgba(18,51,36,0.55);margin-bottom:14px;}
   select{
-    width:100%;padding:15px;border-radius:10px;border:3px solid var(--gold-dim);
-    background:#ffffff;color:#111;font-family:'Barlow Condensed',sans-serif;font-size:19px;
-    min-height:54px;font-weight:600;
+    width:100%;padding:16px;border-radius:12px;border:2px solid var(--line);
+    background:#f9fbfa;color:#111;font-family:'Barlow Condensed',sans-serif;font-size:19px;
+    min-height:56px;font-weight:600;
   }
   select:disabled{opacity:0.5;background:#f0f0f0;}
-  .locked-note{font-size:16px;color:rgba(18,51,36,0.65);font-style:italic;}
+  .score-row{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:12px;flex-wrap:wrap;font-size:15px;color:rgba(18,51,36,0.7);}
+  .score-inputs{display:flex;align-items:center;gap:8px;}
+  .score-inputs input{
+    width:56px;text-align:center;padding:10px 6px;border-radius:10px;border:2px solid var(--line);
+    font-size:18px;font-weight:700;color:var(--ink);background:#f9fbfa;
+  }
+  .locked-note{font-size:16px;color:rgba(18,51,36,0.6);font-style:italic;background:#f4f6f4;padding:14px 16px;border-radius:12px;}
   .edit-row{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;}
   .edit-row input{padding:12px;font-size:17px;min-height:46px;}
-  table.compare{width:100%;border-collapse:collapse;font-size:17px;}
-  table.compare th, table.compare td{border:1px solid var(--line);padding:11px 8px;text-align:left;}
+  table.compare{width:100%;border-collapse:separate;border-spacing:0 6px;font-size:17px;}
+  table.compare th, table.compare td{padding:13px 12px;text-align:left;}
+  table.compare td{background:#f9fbfa;}
+  table.compare tr th:first-child, table.compare tr td:first-child{border-radius:10px 0 0 10px;}
+  table.compare tr th:last-child, table.compare tr td:last-child{border-radius:0 10px 10px 0;}
   table.compare th{background:var(--pitch);color:#ffffff;font-size:16px;}
   .toast{
     position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(120%);
@@ -99,12 +113,12 @@
   }
   .toast.show{transform:translateX(-50%) translateY(0);}
   .scroll-x{overflow-x:auto;}
-  .board-row{display:flex;align-items:center;justify-content:space-between;padding:14px 6px;border-bottom:1px solid var(--line);}
+  .board-row{display:flex;align-items:center;justify-content:space-between;padding:16px 10px;border-bottom:1px solid var(--line);}
   .board-row:last-child{border-bottom:none;}
   .board-rank{color:var(--gold-dim);font-family:'Anton',sans-serif;width:32px;font-size:20px;}
   .board-name{flex:1;font-size:21px;}
   .board-score{font-family:'Anton',sans-serif;color:var(--pitch-dark);font-size:24px;}
-  .whoami{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;font-size:17px;color:var(--ink);margin-bottom:16px;}
+  .whoami{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;font-size:17px;color:var(--ink);margin-bottom:24px;}
   .whoami b{color:var(--pitch);font-size:19px;}
   .empty{color:rgba(18,51,36,0.6);font-size:18px;padding:16px 0;}
   footer{text-align:center;color:rgba(18,51,36,0.4);font-size:14px;margin-top:34px;}
@@ -121,13 +135,14 @@
   .avatar-opt.selected{border-color:var(--gold);background:#fff9ea;}
   .countdown-card{
     background:linear-gradient(135deg, var(--pitch) 0%, var(--pitch-bright) 100%);
-    color:#fff;border-radius:14px;padding:16px 18px;margin-bottom:18px;text-align:center;
+    color:#fff;border-radius:20px;padding:22px 24px;margin-bottom:26px;text-align:center;
+    box-shadow:0 6px 20px rgba(14,138,79,0.25);
   }
   .countdown-card .label{font-size:15px;letter-spacing:1px;text-transform:uppercase;opacity:0.85;}
-  .countdown-card .clock{font-family:'Anton',sans-serif;font-size:30px;color:var(--gold);margin-top:4px;}
-  .trivia-card{background:#fff9ea;border:2px solid var(--gold);border-radius:14px;padding:16px 18px;margin-bottom:18px;}
-  .trivia-q{font-size:19px;font-weight:600;margin-bottom:10px;}
-  .trivia-opt{display:block;width:100%;text-align:left;background:#fff;border:2px solid var(--line);margin-bottom:8px;font-size:17px;padding:12px 14px;min-height:auto;box-shadow:none;border-radius:10px;color:var(--ink);font-weight:500;}
+  .countdown-card .clock{font-family:'Anton',sans-serif;font-size:32px;color:var(--gold);margin-top:8px;}
+  .trivia-card{background:#fff9ea;border:none;border-radius:20px;padding:24px;margin-bottom:26px;box-shadow:0 4px 18px rgba(242,169,0,0.12);}
+  .trivia-q{font-size:19px;font-weight:600;margin-bottom:14px;}
+  .trivia-opt{display:block;width:100%;text-align:left;background:#fff;border:2px solid var(--line);margin-bottom:10px;font-size:17px;padding:14px 16px;min-height:auto;box-shadow:none;border-radius:12px;color:var(--ink);font-weight:500;}
   .trivia-opt.correct{background:#e3f9e5;border-color:#4caf50;}
   .trivia-opt.wrong{background:#fdeceb;border-color:#e8433a;}
   #confetti-layer{position:fixed;inset:0;pointer-events:none;z-index:100;overflow:hidden;}
@@ -156,7 +171,7 @@
   <div id="login-card" class="card">
     <h3 style="margin-bottom:12px;font-size:24px;">¡Hola! ¿Cómo te llamas?</h3>
     <div class="login-row">
-      <input type="text" id="name-input" placeholder="Escribe tu nombre (ej. Papá, Ana...)">
+      <input type="text" id="name-input" placeholder="Escribe tu nombre (ej. Papá, Peter...)">
     </div>
     <p style="margin:14px 0 8px;font-size:17px;font-weight:600;">Elige tu avatar:</p>
     <div class="avatar-grid" id="avatar-grid"></div>
@@ -243,6 +258,8 @@ let allPicks = {};
 let results = {};
 let participants = [];
 let avatars = {};
+let triviaScores = {};
+let triviaDates = {};
 let selectedAvatar = '⚽';
 let hasCelebrated = false;
 
@@ -296,8 +313,17 @@ function listenAll(){
 
   db.collection('picks').onSnapshot(snap=>{
     const next = {};
-    snap.forEach(doc=>{ next[doc.id] = (doc.data() && doc.data().data) || {}; });
+    const triviaNext = {};
+    const triviaDateNext = {};
+    snap.forEach(doc=>{
+      const d = doc.data() || {};
+      next[doc.id] = d.data || {};
+      triviaNext[doc.id] = d.trivia || 0;
+      triviaDateNext[doc.id] = d.triviaDate || null;
+    });
     allPicks = next;
+    triviaScores = triviaNext;
+    triviaDates = triviaDateNext;
     rerenderActiveTab();
     setConn(true, 'Conectado ✓ — todos ven los mismos datos en vivo');
   }, err=>setConn(false, 'Error leyendo picks: '+err.message));
@@ -308,13 +334,20 @@ function listenAll(){
   });
 }
 
+function todayStr(){ return new Date().toISOString().slice(0,10); }
+
 async function saveMatches(){ await db.collection('state').doc('matches').set({ data: matchesData }); }
 async function saveParticipants(){ await db.collection('state').doc('participants').set({ list: participants }); }
 async function saveAvatars(){ await db.collection('state').doc('avatars').set({ data: avatars }); }
 async function savePicks(name){
-  await db.collection('picks').doc(name).set({ data: allPicks[name]||{} });
+  await db.collection('picks').doc(name).set({ data: allPicks[name]||{} }, { merge:true });
   showToast('✅ ¡Tu pick se guardó!');
   maybeCelebrate(name);
+}
+async function saveTriviaScore(name){
+  triviaScores[name] = (triviaScores[name]||0) + 1;
+  triviaDates[name] = todayStr();
+  await db.collection('picks').doc(name).set({ trivia: triviaScores[name], triviaDate: triviaDates[name] }, { merge:true });
 }
 async function saveResults(){ await db.collection('state').doc('results').set({ data: results }); }
 
@@ -462,6 +495,7 @@ function renderBracket(){
       const pick = userPicks[mid];
       const disabled = !t.ready;
       const locked = !disabled && isLocked(mid);
+      const scoreGuess = userPicks[mid+'_score'] || {};
       html += `<div class="match">
         <div class="teams">
           <div class="team">${t.team1}</div>
@@ -472,12 +506,20 @@ function renderBracket(){
         ${disabled
           ? `<div class="locked-note">Se activa cuando elijas la ronda anterior / se definan los equipos.</div>`
           : locked
-          ? `<div class="locked-note">🔒 Cerrado — el partido ya empezó o terminó. ${pick ? 'Tu pick: <b style="color:var(--gold);">'+t[pick]+'</b>' : 'No alcanzaste a elegir.'}</div>`
+          ? `<div class="locked-note">🔒 Cerrado — el partido ya empezó o terminó. ${pick ? 'Tu pick: <b style="color:var(--gold);">'+t[pick]+'</b>'+(scoreGuess.a!=null?' ('+scoreGuess.a+'-'+scoreGuess.b+')':'') : 'No alcanzaste a elegir.'}</div>`
           : `<select data-match="${mid}">
                <option value="" ${!pick?'selected':''}>Elegir ganador...</option>
                <option value="team1" ${pick==='team1'?'selected':''}>${t.team1}</option>
                <option value="team2" ${pick==='team2'?'selected':''}>${t.team2}</option>
-             </select>`
+             </select>
+             ${pick ? `<div class="score-row">
+               <span>🎯 Marcador (bono +1 extra si aciertas):</span>
+               <div class="score-inputs">
+                 <input type="number" min="0" max="20" data-score="${mid}" data-side="a" value="${scoreGuess.a!=null?scoreGuess.a:''}" placeholder="0">
+                 <span>-</span>
+                 <input type="number" min="0" max="20" data-score="${mid}" data-side="b" value="${scoreGuess.b!=null?scoreGuess.b:''}" placeholder="0">
+               </div>
+             </div>` : ''}`
         }
       </div>`;
     }
@@ -487,8 +529,19 @@ function renderBracket(){
     sel.addEventListener('change', async (e)=>{
       const mid = e.target.dataset.match;
       const val = e.target.value;
-      if(!val){ delete userPicks[mid]; } else { userPicks[mid] = val; }
+      if(!val){ delete userPicks[mid]; delete userPicks[mid+'_score']; } else { userPicks[mid] = val; }
       clearDownstream(mid, userPicks);
+      await savePicks(currentUser);
+    });
+  });
+  el.querySelectorAll('input[data-score]').forEach(inp=>{
+    inp.addEventListener('change', async (e)=>{
+      const mid = e.target.dataset.score;
+      const side = e.target.dataset.side;
+      const val = e.target.value === '' ? null : parseInt(e.target.value);
+      const key = mid+'_score';
+      userPicks[key] = userPicks[key] || {};
+      userPicks[key][side] = val;
       await savePicks(currentUser);
     });
   });
@@ -526,24 +579,34 @@ function startCountdown(){
 // ---------- TRIVIA ----------
 let currentTrivia = null;
 function renderTriviaCard(){
+  const already = triviaDates[currentUser] === todayStr();
+  if(already){
+    return `<div class="trivia-card">
+      <div class="trivia-q">🔥 Trivia del día</div>
+      <p style="margin:0;color:rgba(18,51,36,0.7);">Ya jugaste tu trivia de hoy 🌙 — vuelve mañana por otro punto extra.</p>
+    </div>`;
+  }
   if(!currentTrivia) currentTrivia = TRIVIA_BANK[Math.floor(Math.random()*TRIVIA_BANK.length)];
   const t = currentTrivia;
   return `<div class="trivia-card">
-    <div class="trivia-q">🔥 Trivia: ${t.q}</div>
+    <div class="trivia-q">🔥 Trivia del día: ${t.q}</div>
     <div id="trivia-opts">
       ${t.options.map((op,i)=>`<button class="trivia-opt" data-i="${i}">${op}</button>`).join('')}
     </div>
-    <button class="secondary small" id="trivia-next" style="margin-top:6px;">Otra pregunta 🔀</button>
+    <p style="margin:8px 0 0;font-size:14px;color:rgba(18,51,36,0.5);">Solo una trivia por día — así no se empareja todo a puros aciertos de trivia.</p>
   </div>`;
 }
 function bindTriviaCard(){
   const opts = document.querySelectorAll('#trivia-opts .trivia-opt');
   opts.forEach(btn=>{
-    btn.addEventListener('click', ()=>{
+    btn.addEventListener('click', async ()=>{
       const i = parseInt(btn.dataset.i);
       opts.forEach(b=>b.disabled = true);
       if(i === currentTrivia.correct){
         btn.classList.add('correct');
+        await saveTriviaScore(currentUser);
+        showToast('🔥 ¡Correcto! +1 punto de trivia');
+        setTimeout(()=>renderBracket(), 900);
       } else {
         btn.classList.add('wrong');
         opts[currentTrivia.correct].classList.add('correct');
@@ -601,26 +664,37 @@ function renderBoard(){
   const scored = participants.map(name=>{
     const picks = allPicks[name] || {};
     let score = 0;
+    let scoreBonus = 0;
     for(const mid of ids){
       const actual = results[mid];
       if(!actual) continue;
       const t = resolveTeam(mid, picks);
       const pick = picks[mid];
-      if(pick && t.ready && t[pick] === actual) score++;
+      if(pick && t.ready && t[pick] === actual){
+        score++;
+        const guess = picks[mid+'_score'];
+        const real = results[mid+'_score'];
+        if(guess && real && guess.a!=null && guess.b!=null && real.a!=null && real.b!=null && guess.a===real.a && guess.b===real.b){
+          scoreBonus++;
+        }
+      }
     }
-    return { name, score };
-  }).sort((a,b)=>b.score-a.score);
+    const trivia = triviaScores[name] || 0;
+    return { name, score, scoreBonus, trivia, total: score + scoreBonus + trivia };
+  }).sort((a,b)=>b.total-a.total);
   const anyResults = Object.keys(results).length>0;
-  const topScore = scored.length ? scored[0].score : 0;
+  const topScore = scored.length ? scored[0].total : 0;
   el.innerHTML = `<div class="card">
     <h3 style="margin-bottom:6px;">Tabla de puntos</h3>
-    <p style="color:rgba(255,255,255,0.75);font-size:16px;margin-top:0;">1 punto por cada ganador acertado. ${anyResults?'':'Aún no se ha marcado ningún resultado real — ve a la pestaña de actualizar.'}</p>
+    <p style="color:rgba(18,51,36,0.6);font-size:16px;margin-top:0;">1 punto por ganador acertado (+1 extra si adivinas el marcador exacto) + 1 punto por trivia diaria. ${anyResults?'':'Aún no se ha marcado ningún resultado real — ve a la pestaña de actualizar.'}</p>
     ${scored.map((s,i)=>{
-      const isLeader = anyResults && topScore>0 && s.score===topScore;
-      return `<div class="board-row" style="${isLeader?'background:rgba(255,199,44,0.14);border-radius:10px;padding-left:8px;padding-right:8px;':''}">
+      const isLeader = topScore>0 && s.total===topScore;
+      return `<div class="board-row" style="${isLeader?'background:rgba(255,199,44,0.14);border-radius:14px;padding-left:12px;padding-right:12px;':''}">
         <span class="board-rank">${i+1}</span>
-        <span class="board-name">${isLeader?'🏆 ':''}${avatars[s.name]||'⚽'} ${s.name}</span>
-        <span class="board-score">${s.score}</span>
+        <span class="board-name">${isLeader?'🏆 ':''}${avatars[s.name]||'⚽'} ${s.name}
+          <div style="font-size:14px;color:rgba(18,51,36,0.55);font-weight:normal;">⚽ ${s.score} quiniela &nbsp;·&nbsp; 🎯 ${s.scoreBonus} marcador &nbsp;·&nbsp; 🔥 ${s.trivia} trivia</div>
+        </span>
+        <span class="board-score">${s.total}</span>
       </div>`;
     }).join('')}
   </div>`;
@@ -653,13 +727,22 @@ function renderAdmin(){
     const t = resolveTeam(mid, picks);
     if(!t.ready) continue;
     const current = results[mid] || '';
+    const currentScore = results[mid+'_score'] || {};
     resultHtml += `<div class="match">
-      <div class="meta">${matchLabel(mid)}</div>
+      <div class="meta">${matchLabel(mid)}: ${t.team1} vs ${t.team2}</div>
       <select data-result="${mid}">
         <option value="">Aún no se juega / sin marcar</option>
         <option value="${t.team1}" ${current===t.team1?'selected':''}>${t.team1} ganó</option>
         <option value="${t.team2}" ${current===t.team2?'selected':''}>${t.team2} ganó</option>
       </select>
+      <div class="score-row">
+        <span>🎯 Marcador final real:</span>
+        <div class="score-inputs">
+          <input type="number" min="0" max="20" data-rscore="${mid}" data-side="a" value="${currentScore.a!=null?currentScore.a:''}" placeholder="0">
+          <span>-</span>
+          <input type="number" min="0" max="20" data-rscore="${mid}" data-side="b" value="${currentScore.b!=null?currentScore.b:''}" placeholder="0">
+        </div>
+      </div>
     </div>`;
   }
   if(!resultHtml) resultHtml = '<div class="empty">Cuando haya equipos definidos con picks hechos, aquí podrás marcar quién ganó de verdad.</div>';
@@ -667,12 +750,12 @@ function renderAdmin(){
   el.innerHTML = `
     <div class="card">
       <h3 style="margin-bottom:6px;">Definir equipos pendientes</h3>
-      <p style="color:rgba(245,245,240,0.55);font-size:14px;margin-top:0;">Cuando se sepa quién avanzó en un partido real, escribe el nombre del equipo aquí.</p>
+      <p style="color:rgba(18,51,36,0.6);font-size:15px;margin-top:0;">Cuando se sepa quién avanzó en un partido real, escribe el nombre del equipo aquí.</p>
       ${tbdHtml}
     </div>
     <div class="card">
       <h3 style="margin-bottom:6px;">Marcar resultados reales</h3>
-      <p style="color:rgba(245,245,240,0.55);font-size:14px;margin-top:0;">Esto alimenta la tabla de puntos.</p>
+      <p style="color:rgba(18,51,36,0.6);font-size:15px;margin-top:0;">El ganador da 1 punto; acertar el marcador exacto da 1 punto extra.</p>
       ${resultHtml}
     </div>
   `;
@@ -692,6 +775,17 @@ function renderAdmin(){
       const mid = e.target.dataset.result;
       const val = e.target.value;
       if(val) results[mid] = val; else delete results[mid];
+      await saveResults();
+    });
+  });
+  el.querySelectorAll('input[data-rscore]').forEach(inp=>{
+    inp.addEventListener('change', async (e)=>{
+      const mid = e.target.dataset.rscore;
+      const side = e.target.dataset.side;
+      const val = e.target.value === '' ? null : parseInt(e.target.value);
+      const key = mid+'_score';
+      results[key] = results[key] || {};
+      results[key][side] = val;
       await saveResults();
     });
   });
